@@ -12,7 +12,6 @@ import (
 	"time"
 
 	"github.com/austinmilt/tofu/internal/env"
-	"github.com/austinmilt/tofu/internal/model/visuals"
 	"github.com/labstack/echo/v4"
 )
 
@@ -20,8 +19,6 @@ func NewServer(
 	environment env.Env,
 ) Server {
 	s := &Server{
-		ui:             visuals.NewUiState(),
-		uiLock:         &sync.Mutex{},
 		port:           environment.SammiAsClientServerPort(),
 		listeners:      make(map[string]*(func() error)),
 		listenersLock:  &sync.Mutex{},
@@ -36,8 +33,6 @@ func NewServer(
 
 type Server struct {
 	environment    env.Env
-	ui             *visuals.UiState
-	uiLock         *sync.Mutex
 	port           int
 	listeners      map[string]*func() error
 	listenersLock  *sync.Mutex
